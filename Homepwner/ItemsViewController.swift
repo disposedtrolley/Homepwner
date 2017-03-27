@@ -33,7 +33,7 @@ class ItemsViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return sections[section].items.count
+        return sections[section].items.count + 1
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -43,10 +43,15 @@ class ItemsViewController: UITableViewController {
         // Set the text on the cell with the description of the item
         // that is at the nth index of items, where n = row this cell
         // will appear in on the tableview
-//        let item = itemStore.allItems[indexPath.row]
         
-        cell.textLabel?.text = sections[indexPath.section].items[indexPath.row].name
-        cell.detailTextLabel?.text = "$\(sections[indexPath.section].items[indexPath.row].valueInDollars)"
+        if indexPath.row == sections[indexPath.section].items.count {
+            cell.textLabel?.text = "No more items!"
+            cell.detailTextLabel?.text = ""
+        } else {
+            cell.textLabel?.text = sections[indexPath.section].items[indexPath.row].name
+            cell.detailTextLabel?.text = "$\(sections[indexPath.section].items[indexPath.row].valueInDollars)"
+
+        }
         
         return cell
     }
