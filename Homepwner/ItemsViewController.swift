@@ -47,13 +47,29 @@ class ItemsViewController: UITableViewController {
         if indexPath.row == sections[indexPath.section].items.count {
             cell.textLabel?.text = "No more items!"
             cell.detailTextLabel?.text = ""
+            cell.textLabel?.font = UIFont(name: "Avenir", size: 16)
         } else {
             cell.textLabel?.text = sections[indexPath.section].items[indexPath.row].name
             cell.detailTextLabel?.text = "$\(sections[indexPath.section].items[indexPath.row].valueInDollars)"
-
+            cell.textLabel?.font = UIFont(name: "Avenir", size: 22)
         }
-        
+
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath.row == sections[indexPath.section].items.count {
+            return 44
+        } else {
+            return 60
+        }
+    }
+    
+    override func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        // Set background colour of cells and text labels
+        cell.textLabel?.backgroundColor = UIColor(white: 1, alpha: 0.3)
+        cell.detailTextLabel?.backgroundColor = UIColor(white: 1, alpha: 0.3)
+        cell.backgroundColor = UIColor(white: 1, alpha: 0.3)
     }
     
     override func viewDidLoad() {
@@ -67,6 +83,13 @@ class ItemsViewController: UITableViewController {
         tableView.scrollIndicatorInsets = insets
         
         sections = getSectionsFromItemStore()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        // Add background image
+        let backgroundImage = UIImage(named: "640x1136.png")
+        let imageView = UIImageView(image: backgroundImage)
+        self.tableView.backgroundView = imageView
     }
     
     func getSectionsFromItemStore() -> [Section] {
